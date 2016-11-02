@@ -1,0 +1,35 @@
+<div class="container-fluid table-responsive" id="ActiveTransferGrid">
+    <h2>Active Transfer for <mark><span class="text-info">{{selectedFromLocation.LocationName}}</span></mark></h2>
+    <hr />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="10%">TransferId</th>
+                <th width="10%">From</th>
+                <th width="10%">To</th>
+                <th width="10%">Status</th>
+                <th width="20%">Order Date</th>
+                <th width="10%">Total Items</th>
+                <th width="20%">First Item SKU</th>
+                <th width="10%">First Item Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="x in data.WarehouseTransferInfo.data">
+                <td>{{x.ReferenceNumber}}</td>
+                <td>{{x.FromLocation}}</td>
+                <td>{{x.ToLocation}}</td>
+                <td>{{x.Status}}</td>
+                <td>{{x.OrderDate}}</td>
+                <td>{{x.NumberOfItems}}</td>
+                <td>{{x.firstItemSKU}}</td>
+                <td>{{x.firstItemTitle}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="col-sm-12">
+    <button type="button" class="btn btn-primary" ng-click="createNewTransfer(data.WarehouseTransferInfo)"> Create New Transfer </button>
+</div>

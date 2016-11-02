@@ -1,0 +1,56 @@
+<div class="modal-header">
+	<h3 class="modal-title" id="modal-title">Create New Transfer</h3>
+</div>
+
+<div class="modal-body" id="modal-body">
+<ul>
+	<li>
+		<div class="dropdown">
+			<h3>To Location</h3>
+			<a class="dropdown-toggle dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>{{selectedToLocation.LocationName}}</strong><span class="caret"></span></a>
+			<ul class="dropdown-menu">
+			    <li ng-repeat="x in locations" ng-click="changeToLocation(x)"><a>{{x.LocationName}}</a></li>
+			</ul>
+		</div>
+	</li>
+	<li>
+		<div>
+			<h3>Upload</h3>
+			<div>
+			  <label class="btn btn-primary btn-file btn-md">
+			      Browse...<input type="file" style="display: none;" file-reader="fileContent" ngf-select="onFileSelect($files)" multiple>
+			      <div>{{fileContent}}</div>
+			  </label>
+			</div>
+			<p class="bg-success" ng-show="uploadSuccess">{{successMsg}}</p>
+			<p class="bg-success" ng-show="uploadError">{{errorMsg}}</p>
+		</div>
+		<h4 ng-show="uploadSuccess">Found {{bufferData.length}} rows</h4>
+		<div class="preview-data col-sm-12">
+			<table class="table table-striped">
+			    <thead>
+			        <tr>
+			            <th ng-repeat="x in data.arrayInfo.titles" width="10%">{{x}}</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+
+			    	<tr ng-repeat="row in data.arrayInfo.data">
+			    		<td ng-repeat="cell in row">
+			    			{{cell}}
+			    		</td>
+			    	</tr>
+			    </tbody>
+			</table>
+		</div>
+
+		<div ng-show="uploadSuccess">
+		    <ul uib-pagination total-items="bufferData.length" max-size="8" ng-model="data.arrayInfo.currentPage" ng-change="pageChanged()" boundary-link-numbers="true" rotate="false"></ul>
+		</div>
+	</li>
+</ul>
+
+<div class="modal-footer">
+	<button class="btn btn-primary" type="button" ng-click="submit()">Submit</button>
+	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
