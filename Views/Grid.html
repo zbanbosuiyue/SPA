@@ -11,19 +11,19 @@
                 <th width="20%">Order Date</th>
                 <th width="10%">Total Items</th>
                 <th width="20%">First Item SKU</th>
-                <th width="10%">First Item Title</th>
+                <th width="10%">Request Qty</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="x in data.WarehouseTransferInfo.data">
-                <td>{{x.ReferenceNumber}}</td>
+                <td><a style="cursor: pointer" href="#" ng-click="$event.preventDefault(); getTransferDetail(x)">{{x.ReferenceNumber}}</a></td>
                 <td>{{x.FromLocation}}</td>
                 <td>{{x.ToLocation}}</td>
                 <td>{{x.Status}}</td>
                 <td>{{x.OrderDate}}</td>
                 <td>{{x.NumberOfItems}}</td>
                 <td>{{x.firstItemSKU}}</td>
-                <td>{{x.firstItemTitle}}</td>
+                <td>{{x.firstItemRequestQty}}</td>
             </tr>
         </tbody>
     </table>

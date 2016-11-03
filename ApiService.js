@@ -39,4 +39,24 @@
         return result;
     };
 
+
+    this.AuthToken = function (token, callback) {
+        result = $http.get('php-controller/api.php', {params: {"token" : token}}).success(
+           function (data, status) {
+               var event = {
+                   result: data,
+                   hasErrors: false
+               };
+               callback(event);
+           }).error(
+            function (data, status) {
+                var event = {
+                    result: "",
+                    hasErrors: true,
+                    error: data
+                };
+                callback(event);
+            }
+        );
+    } 
 }

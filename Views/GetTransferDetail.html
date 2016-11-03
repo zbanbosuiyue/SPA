@@ -1,0 +1,42 @@
+<div id="modal-all">
+	<div class="modal-header">
+		<h3 class="modal-title" id="modal-title"><mark>"{{data.FromLocation}}"</mark> ===>  <mark>"{{data.ToLocation}}" </mark></h3>
+	</div>
+
+	<div class="modal-body" id="modal-body">
+		<ul>
+			<div class="bg-danger" uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
+			<li>
+				<div class="preview-data col-sm-12">
+					<table class="table table-striped">
+						<thead>
+							<tr>	
+								<th width="10%">SKU</th>	
+								<th width="10%">Title</th>
+								<th width="10%">Request Qty</th>	
+								<th width="10%">Receive Qty</th>
+								<th width="10%">Sent Qty</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<tr ng-repeat="x in pageData">
+								<td>{{x.SKU}}</td>
+								<td>{{x.ItenTitl}}</td>
+								<td>{{x.RequestedQuantity}}</td>
+								<td>{{x.ReceivedQuantity}}</td>
+								<td>{{x.SentQuantity}}</td>			    	
+							</tr>
+						</tbody>
+					</table>
+				</div>
+					<ul uib-pagination total-items="data.itemsData.length" items-per-page="itemsperpage" max-size="8" ng-model="currentPage" ng-change="pageChanged()" boundary-link-numbers="true" rotate="false"></ul>
+				
+			</li>
+		</ul>
+
+		<div class="modal-footer">
+			<button class="btn btn-primary" type="button" ng-click="close()">Close</button>
+		</div>
+
+	</div>

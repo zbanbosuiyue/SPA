@@ -1,4 +1,4 @@
-var CreateNewTransferController = function ($scope, $uibModalInstance, data, Upload, Api) {
+var CreateNewTransferController = function ($scope, $uibModalInstance, $rootScope, data, Upload, Api) {
 
 	$scope.locations = data.toLocations;
 	$scope.selectedToLocation = $scope.locations[0];
@@ -8,9 +8,28 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, data, Upl
 		arrayInfo : {
 			titles : null,
 			currentPage: 1,
-			itemsperpage: 10,
+			itemsPerPage: 5,
 			data : []
 		}
+	};
+
+	$scope.alerts = [];
+	$scope.goodAlerts = [];
+
+	$scope.addAlert = function(message) {
+	  $scope.alerts.push({msg: message});
+	};
+
+	$scope.closeAlert = function(index) {
+	  $scope.alerts.splice(index, 1);
+	};
+
+	$scope.addGoodAlert = function(message){
+		$scope.goodAlerts.push({msg: message});
+	};
+
+	$scope.closeGoodAlert = function(index){
+		$scope.goodAlerts.splice(index,1);
 	};
 
 	$scope.changeToLocation = function (loc) {
@@ -22,23 +41,30 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, data, Upl
 	};
 
 	$scope.submit= function (){
+		if ( $scope.skuIndex == null || $scope.requestQtyIndex == null){
+			$scope.addAlert('Error:  Not found "sku" or "request_qty" in file!!!');
+			return;
+		}
+
+
 		var request1 = {
 			fromLocationId : $scope.fromLocation.StockLocationId,
 			toLocationId : $scope.selectedToLocation.StockLocationId
 		}
-
-		SetBusy($("#modal-body"));
+		SetBusy($("#modal-all"));
 
 		Api.PostApiCall("WarehouseTransfer", "CreateTransferRequestWithReturn", request1, function (createTransferEvent) {
-		    SetBusy($("#modal-body"), true);
+		    
 		    if (createTransferEvent.hasErrors == true) {
 		        alert("Error Getting data: " + createTransferEvent.error);
 		    } else {
 		    	if(createTransferEvent.result.PkTransferId != null){
-		    		$scope.fkStockItemIdArr.forEach(function(element){
+		    		$scope.fkStockItemIdArr.forEach(function(element, index){
+		    			$scope.arrayIndex = index;
+
 		    			var request2 = {
 		    				fkTransferId: createTransferEvent.result.PkTransferId,
-		    				pkStockItemId: element.fkStockItemId
+		    				pkStockItemId: element.pkStockItemId
 		    			}
 		    			Api.PostApiCall("WarehouseTransfer", "AddItemToTransfer", request2, function (addTransferItemEvent){
 		    				if (addTransferItemEvent.hasErrors == true) {
@@ -52,9 +78,14 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, data, Upl
 		    					}
 
 		    					Api.PostApiCall("WarehouseTransfer", "ChangeTransferItemRequestQuantity", request3, function(changeTransferItemEvent){
+		    						SetBusy($("#modal-all"), true);
 		    						if (changeTransferItemEvent.hasErrors == true) {
 		    						    alert("Error Getting data: " + changeTransferItemEvent.error);
 		    						} else {
+		    							if($scope.arrayIndex == $scope.fkStockItemIdArr.length - 1){
+		    								$scope.cancel();
+		    								$rootScope.$emit('GetData');
+		    							}
 		    						}
 		    					});
 		    				}
@@ -63,8 +94,6 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, data, Upl
 		    	}
 		    }
 		});
-
-		
 	}
 
 
@@ -78,7 +107,22 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, data, Upl
 			reader.onload = function(){
 				arrayBuffer = CSVToArray(this.result, ',');
 				$scope.data.arrayInfo.titles = arrayBuffer.shift();
-				$scope.bufferData = arrayBuffer;
+				clearArr = [];
+				arrayBuffer.forEach(function(element){
+					isNull = false;
+					element.forEach(function(sub_element) {
+						if (sub_element == ""){
+							isNull = true;
+						}
+					});
+
+					if (!isNull){
+						clearArr.push(element);
+					}
+				})
+				$scope.bufferData = clearArr;
+
+
 
 				$scope.data.arrayInfo.titles.forEach(function (element, index){
 					if (element.toLowerCase() == 'sku'){
@@ -89,6 +133,8 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, data, Upl
 						$scope.requestQtyIndex = index;
 					}
 				});
+
+
 				$scope.uploadSuccess = true;
 
 
@@ -108,13 +154,40 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, data, Upl
 							$scope.fkStockItemIdArr = event.result.Results;
 							$scope.fkStockItemIdArr.forEach(function (linnElement){
 								$scope.bufferData.every(function (csvElement){
-									if (linnElement.ChannelSKU == csvElement[$scope.skuIndex]){
+									if (linnElement.ItemNumber == csvElement[$scope.skuIndex]){
 										linnElement.requestQty = csvElement[$scope.requestQtyIndex];
 										return false;
 									} else return true;
 								})
 							});
 							console.log($scope.fkStockItemIdArr);
+							if ($scope.bufferData.length != $scope.fkStockItemIdArr.length){
+								alertString = 'CSV file contain ' + $scope.bufferData.length + ' rows. But found ' +  $scope.fkStockItemIdArr.length 
+								+ ' rows in Linnworks. Please check your file';
+								$scope.addAlert(alertString);
+
+								$scope.bufferData.forEach(function(element) {
+									// statements
+									sku = element[$scope.skuIndex];
+									isExist = false;
+									$scope.fkStockItemIdArr.every(function(linn_element) {
+
+										if(sku == linn_element.ItemNumber) {
+											isExist = true;
+											return false;
+										}
+										return true;
+									});
+									if (!isExist){
+										alertString = 'SKU: ' + sku + '  not found in linnworks';
+										$scope.addAlert(alertString);
+									}
+								});
+							}
+							else{
+								alertString = "Great. All SKU match to linnworks."
+								$scope.addGoodAlert(alertString);
+							}
 						}
 					}
 				});
@@ -146,10 +219,10 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, data, Upl
 	function GetData(){
 		if ($scope.bufferData != null){
 			var currentPage = $scope.data.arrayInfo.currentPage;
-			var itemsperpage = $scope.data.arrayInfo.itemsperpage;
-			var startPoint = (currentPage - 1) * itemsperpage;
-			for (i = 0; i < itemsperpage; i++){
-				data = $scope.bufferData.slice(startPoint, startPoint + itemsperpage);
+			var itemsPerPage = $scope.data.arrayInfo.itemsPerPage;
+			var startPoint = (currentPage - 1) * itemsPerPage;
+			for (i = 0; i < itemsPerPage; i++){
+				data = $scope.bufferData.slice(startPoint, startPoint + itemsPerPage);
 			}
 			$scope.data.arrayInfo.data = data;
 
@@ -203,6 +276,21 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, data, Upl
 		return( arrData );
 	}
 
+	function isNumeric(n) {
+	  return !isNaN(parseFloat(n)) && isFinite(n);
+	}
+
+	Array.prototype.remove = function() {
+	    var what, a = arguments, L = a.length, ax;
+	    while (L && this.length) {
+	        what = a[--L];
+	        while ((ax = this.indexOf(what)) !== -1) {
+	            this.splice(ax, 1);
+	        }
+	    }
+	    return this;
+	};
+
 	function buildQuery(array, skuIndex){
 		var SKUString = "";
 		array.forEach(function(element){
@@ -217,10 +305,10 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, data, Upl
 	}
 
 	function buildString(skuString){
-		return "SELECT  DISTINCT  fkStockItemId, ChannelSKU FROM Stock_ChannelSKU WHERE ChannelSKU in " + skuString;
+		return "SELECT  DISTINCT  pkStockItemId, ItemNumber FROM StockItem WHERE ItemNumber in " + skuString;
 	}
 }
 
-CreateNewTransferController.$inject = ['$scope','$uibModalInstance', 'data', 'Upload', 'Api'];
+CreateNewTransferController.$inject = ['$scope','$uibModalInstance', '$rootScope', 'data', 'Upload', 'Api'];
 
 

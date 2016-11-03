@@ -7,6 +7,11 @@ App.service('Api', ['$http', ApiService]);
 App.controller('MainController', MainController);
 App.controller('GridController', GridController);
 App.controller('CreateNewTransferController', CreateNewTransferController);
+App.controller('GetTransferDetailController', GetTransferDetailController);
+
+console.log("a");
+console.log(sessionStorage.getItem("token"));
+
 
 
 if (getParameterByName("token") != "") {
@@ -15,13 +20,14 @@ if (getParameterByName("token") != "") {
 }
 
 App.run(['$http', function ($http) {
-    $http.defaults.headers.common['Authorization'] = "token " + sessionStorage.getItem("token");
+    $http.defaults.headers.common['Authorization'] = sessionStorage.getItem("token");
 }]);
 
 
 
 if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") == "") {
     window.location.replace("Views/NotAuthorized.html");
+    console.log("d");
 }
 
 function getParameterByName(name) {

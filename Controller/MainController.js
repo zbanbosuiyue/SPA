@@ -11,7 +11,6 @@
         $scope.selectedFromLocation = loc;
     }
 
-    
 
 
 
@@ -33,7 +32,6 @@
             }
         });
     }
-
     GetLocations();
 }
 
