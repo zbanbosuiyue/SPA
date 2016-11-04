@@ -78,11 +78,12 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, $rootScop
 		    					}
 
 		    					Api.PostApiCall("WarehouseTransfer", "ChangeTransferItemRequestQuantity", request3, function(changeTransferItemEvent){
-		    						SetBusy($("#modal-all"), true);
+		    						
 		    						if (changeTransferItemEvent.hasErrors == true) {
 		    						    alert("Error Getting data: " + changeTransferItemEvent.error);
 		    						} else {
 		    							if($scope.arrayIndex == $scope.fkStockItemIdArr.length - 1){
+		    								SetBusy($("#modal-all"), true);
 		    								$scope.cancel();
 		    								$rootScope.$emit('GetData');
 		    							}
@@ -144,9 +145,9 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, $rootScop
 					script: query
 				};
 
-				SetBusy($("#modal-body"));
+				SetBusy($("#modal-all"));
 				Api.PostApiCall("Dashboards", "ExecuteCustomScriptQuery", request, function(event){
-					SetBusy($("#modal-body"), true);
+					
 					if (event.hasErrors == true) {
 					    alert("Error Getting data: " + event.error);
 					} else {
@@ -160,7 +161,7 @@ var CreateNewTransferController = function ($scope, $uibModalInstance, $rootScop
 									} else return true;
 								})
 							});
-							console.log($scope.fkStockItemIdArr);
+							SetBusy($("#modal-all"), true);
 							if ($scope.bufferData.length != $scope.fkStockItemIdArr.length){
 								alertString = 'CSV file contain ' + $scope.bufferData.length + ' rows. But found ' +  $scope.fkStockItemIdArr.length 
 								+ ' rows in Linnworks. Please check your file';

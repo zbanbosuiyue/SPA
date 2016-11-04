@@ -30,17 +30,16 @@ var GridController = function ($scope, $rootScope, $uibModal, Api) {
             var request = {
                 locationId: $scope.selectedFromLocation.StockLocationId,
             };
-            SetBusy($("#ActiveTransferGrid"));
+            SetBusy($("body"));
             Api.PostApiCall("WarehouseTransfer", "GetActiveTransfersForLocation", request, function (event1) {
-                SetBusy($("#ActiveTransferGrid"), true);
                 if (event1.hasErrors == true) {
                     alert("Error Getting data: " + event1.error);
                 } else {
-                    event1.result.forEach(function(element){
+                    event1.result.forEach(function(element, index){
+                        $scope.index = index;
                         request = {
                             pkTransferId: element.PkTransferId
                         }
-
                         Api.PostApiCall("WarehouseTransfer", "GetTransferItems", request, function (event2) {
                              if (event2.hasErrors == true) {
                                 alert("Error Getting data: " + event2.error);
@@ -49,6 +48,10 @@ var GridController = function ($scope, $rootScope, $uibModal, Api) {
                                     element.itemsData = event2.result;
                                     element.firstItemSKU = event2.result[0].SKU;
                                     element.firstItemRequestQty = event2.result[0].RequestedQuantity;
+                                }
+
+                                if ($scope.index == event1.result.length - 1) {
+                                    SetBusy($("body"), true);
                                 }
                              }
                         });

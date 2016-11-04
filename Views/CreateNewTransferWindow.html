@@ -6,7 +6,7 @@
 <div class="modal-body" id="modal-body">
 
 <ul>
-	<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
+	<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)" style="background-color: red; color: white;">{{alert.msg}}</div>
 	<div uib-alert ng-repeat="alert in goodAlerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeGoodAlert($index)" style="background-color: green; color: white;">{{alert.msg}}</div>
 	<li>
 		<div class="dropdown">
