@@ -35,27 +35,31 @@ var GridController = function ($scope, $rootScope, $uibModal, Api) {
                 if (event1.hasErrors == true) {
                     alert("Error Getting data: " + event1.error);
                 } else {
-                    event1.result.forEach(function(element, index){
-                        $scope.index = index;
-                        request = {
-                            pkTransferId: element.PkTransferId
-                        }
-                        Api.PostApiCall("WarehouseTransfer", "GetTransferItems", request, function (event2) {
-                             if (event2.hasErrors == true) {
-                                alert("Error Getting data: " + event2.error);
-                             } else {
-                                if (event1.result.length > 0){
-                                    element.itemsData = event2.result;
-                                    element.firstItemSKU = event2.result[0].SKU;
-                                    element.firstItemRequestQty = event2.result[0].RequestedQuantity;
-                                }
+                    if (event1.result.length > 0){
+                        event1.result.forEach(function(element, index){
+                            $scope.index = index;
+                            request = {
+                                pkTransferId: element.PkTransferId
+                            }
+                            Api.PostApiCall("WarehouseTransfer", "GetTransferItems", request, function (event2) {
+                                 if (event2.hasErrors == true) {
+                                    alert("Error Getting data: " + event2.error);
+                                 } else {
+                                    if (event1.result.length > 0){
+                                        element.itemsData = event2.result;
+                                        element.firstItemSKU = event2.result[0].SKU;
+                                        element.firstItemRequestQty = event2.result[0].RequestedQuantity;
+                                    }
 
-                                if ($scope.index == event1.result.length - 1) {
-                                    SetBusy($("body"), true);
-                                }
-                             }
-                        });
-                    })
+                                    if ($scope.index == event1.result.length - 1) {
+                                        SetBusy($("body"), true);
+                                    }
+                                 }
+                            });
+                        })
+                    } else{
+                        SetBusy($("body"), true);
+                    }
 
                     $scope.data.WarehouseTransferInfo.totalitems = event1.result.length;
                     $scope.data.WarehouseTransferInfo.data = event1.result;

@@ -83,7 +83,17 @@ if(isset($headers[$authString])){
 
 		$url = buildURL($controller, $method);
 
+		/*
+		if ($method == "GetActiveTransfersForLocation"){
+			var_dump("lll");
+			var_dump($url);
+			$result = curl_init_custom_with_parameters($url, $parameters);
+			var_dump($result);
+			exit();
+		}
+*/
 		$result = curl_init_custom_with_parameters($url, $parameters);
+
 
 		if (strpos($result, 'Message') !== false) {
 		    $result = GetAuth($AuthURL, $data);

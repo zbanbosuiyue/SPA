@@ -11,9 +11,6 @@
         $scope.selectedFromLocation = loc;
     }
 
-
-
-
     function GetLocations() {
         SetBusy($('body'));
 
