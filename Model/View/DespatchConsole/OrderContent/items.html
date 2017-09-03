@@ -1,0 +1,53 @@
+<div class="item-details">
+	<div class="item-basic-section">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th width="3%"></th>
+					<th width="15%">SKU</th>
+					<th width="20%">Item Title</th>
+					<th width="15%">Barcode</th>
+					<th width="3%">Quantity</th>
+					<th width="10%">Price/Unit</th>
+					<th width="3%">Dis %</th>
+					<th width="3%">Tax</th>
+					<th width="10%">Line cost</th>
+				</tr>
+			</thead>
+			<div class="border"></div>
+			<tbody>
+				<tr ng-repeat="(index, x) in orderItems" class="{{x.CompositeSubItems.length ? 'composite' : 'regular'}}-{{index}}">
+					<td>
+						<span ng-if="x.CompositeSubItems.length"><i class="fa fa-plus-square-o fa-lg" ng-click="showChildItems(index)"></i></span>
+					</td>
+					<td>
+						<div class="item-detail-sku"><span>{{x.SKU}}</span></div>
+						<div class="item-detail-child child-{{index}}" ng-if="x.CompositeSubItems.length">
+							<table class="table table-striped item-child-table">
+								<thead>
+									<tr>
+										<th>SKU</th>
+										<th>QTY</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="y in x.CompositeSubItems">
+										<td>{{y.SKU}}</td>
+										<td>{{y.Quantity}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</td>
+					<td>{{x.Title}}</td>
+					<td>{{x.BarcodeNumber}}</td>
+					<td>{{x.Quantity}}</td>
+					<td>$ {{x.PricePerUnit}}</td>
+					<td>{{x.Discount}}</td>
+					<td>{{x.Tax}}</td>
+					<td>$ {{x.UnitCost}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

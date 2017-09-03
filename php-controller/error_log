@@ -1,0 +1,20 @@
+[25-Aug-2017 12:40:12 America/Chicago] PHP Warning:  fread(): Length parameter must be greater than 0 in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 51
+[25-Aug-2017 17:33:07 America/Chicago] PHP Warning:  fopen(): Filename cannot be empty in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 56
+[25-Aug-2017 18:13:17 America/Chicago] PHP Warning:  fopen(): Filename cannot be empty in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 56
+[25-Aug-2017 18:19:11 America/Chicago] PHP Warning:  fopen(): Filename cannot be empty in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 56
+[25-Aug-2017 18:33:20 America/Chicago] PHP Parse error:  syntax error, unexpected ')' in /home/hpsgrowl/public_html/SPA/php-controller/custom_curl.php on line 14
+[25-Aug-2017 18:33:20 America/Chicago] PHP Parse error:  syntax error, unexpected ')' in /home/hpsgrowl/public_html/SPA/php-controller/custom_curl.php on line 14
+[25-Aug-2017 18:39:25 America/Chicago] PHP Warning:  http_build_query(): Parameter 1 expected to be Array or Object.  Incorrect value given in /home/hpsgrowl/public_html/SPA/php-controller/custom_curl.php on line 32
+[25-Aug-2017 18:40:29 America/Chicago] PHP Warning:  http_build_query(): Parameter 1 expected to be Array or Object.  Incorrect value given in /home/hpsgrowl/public_html/SPA/php-controller/custom_curl.php on line 32
+[25-Aug-2017 18:42:01 America/Chicago] PHP Warning:  http_build_query(): Parameter 1 expected to be Array or Object.  Incorrect value given in /home/hpsgrowl/public_html/SPA/php-controller/custom_curl.php on line 32
+[26-Aug-2017 00:12:39 America/Chicago] PHP Warning:  http_build_query(): Parameter 1 expected to be Array or Object.  Incorrect value given in /home/hpsgrowl/public_html/SPA/php-controller/custom_curl.php on line 37
+[26-Aug-2017 00:57:19 America/Chicago] PHP Warning:  fopen(): Filename cannot be empty in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 56
+[26-Aug-2017 00:57:32 America/Chicago] PHP Warning:  fopen(): Filename cannot be empty in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 56
+[26-Aug-2017 01:00:23 America/Chicago] PHP Warning:  fopen(): Filename cannot be empty in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 56
+[26-Aug-2017 01:00:24 America/Chicago] PHP Warning:  fopen(): Filename cannot be empty in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 56
+[26-Aug-2017 01:00:29 America/Chicago] PHP Warning:  fopen(): Filename cannot be empty in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 56
+[26-Aug-2017 01:00:41 America/Chicago] PHP Warning:  fopen(): Filename cannot be empty in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 56
+[28-Aug-2017 13:43:54 America/Chicago] PHP Parse error:  syntax error, unexpected '$data' (T_VARIABLE) in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 41
+[28-Aug-2017 13:43:54 America/Chicago] PHP Parse error:  syntax error, unexpected '$data' (T_VARIABLE) in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 41
+[28-Aug-2017 13:44:24 America/Chicago] PHP Parse error:  syntax error, unexpected '$data' (T_VARIABLE) in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 41
+[28-Aug-2017 13:44:24 America/Chicago] PHP Parse error:  syntax error, unexpected '$data' (T_VARIABLE) in /home/hpsgrowl/public_html/SPA/php-controller/api.php on line 41

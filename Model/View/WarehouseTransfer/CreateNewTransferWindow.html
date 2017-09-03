@@ -6,9 +6,9 @@
 <div class="modal-body" id="modal-body">
 
 <ul>
-	<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)" style="background-color: red; color: white;">{{alert.msg}}</div>
-	<div uib-alert ng-repeat="alert in goodAlerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeGoodAlert($index)" style="background-color: green; color: white;">{{alert.msg}}</div>
+	<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)" ng-style="alertStyle">{{alert.msg}}</div>
 	<li>
+
 		<div class="dropdown">
 			<h3>To Location</h3>
 			<a class="dropdown-toggle dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>{{selectedToLocation.LocationName}}</strong><span class="caret"></span></a>

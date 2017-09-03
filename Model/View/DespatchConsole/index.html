@@ -1,0 +1,83 @@
+<div class="container-fluid table-responsive" id="OpenOrderGrid">
+    <h2>Despatch Console for <mark><span class="text-info">{{selectedFromLocation.LocationName}}</span></mark></h2>
+    <hr />
+    <div uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}></div>
+    <div class="row">
+        <div class="col-sm-12">
+        <input type="text" class="input-xlarge search-query ng-pristine ng-valid" ng-model="data.scanCode" ng-change="byScanCodeChange()" ng-keyup="$event.keyCode == 13 && showScanedOrders(data)" placeholder="Search by Item Barcode/SKU" autocomplete="off">
+        </div>
+    </div>
+    <div ng-if="data.orderPageInfo.data" class="open-order">
+        <table class="table table-striped" id="order-table" >
+            <thead>
+                <tr>
+                    <th width="10%">OrderId</th>
+                    <th width="10%">Channel Received Date</th>
+                    <th width="10%">Linnworks Received Date</th>
+                    <th width="10%">Source</th>
+                    <th width="10%">Items</th>
+                    <th width="10%">Name</th>
+                    <th width="20%">Total</th>
+                    <th width="20%">Ship Method</th>
+                    <th width="10%">Status</th>
+                </tr>
+            </thead>
+            <tbody ng-if="data">
+                <tr ng-repeat="(x_index,x) in data.orderPageInfo.data">
+                    <td><a style="cursor: pointer" href="#" ng-click="$event.preventDefault(); getOrderDetail(x)">{{x.NumOrderId}}</a></td>
+                    <td>{{x.GeneralInfo.ReceivedDate| date:'yyyy-MM-dd'}}</td>
+                    <td>{{x.GeneralInfo.DespatchByDate| date:'yyyy-MM-dd'}}</td>
+                    <td>{{x.GeneralInfo.Source}}</td>
+                    <td>
+                        <table class="table table-striped items-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th width="25%">SKU</th>
+                                <th width="25%">Title</th>
+                                <th width="25%">QTY</th>
+                                <th width="25%">Cost</th>
+                            </tr>
+                        </thead>
+                            <tr ng-repeat="(y_index, y) in x.Items">
+                                <td>
+                                    <span ng-if="y.CompositeSubItems.length"><i class="fa fa-plus-square-o fa-lg" ng-click="showChildItems(x_index,y_index)"></i></span>
+                                </td>
+                                <td>
+                                    <div class="item-detail-sku"><span>{{y.SKU}}</span></div>
+                                    <div class="item-detail-child child-{{x_index}}-{{y_index}}" ng-if="y.CompositeSubItems.length">
+                                        <table class="table table-striped item-child-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>SKU</th>
+                                                    <th>QTY</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="z in y.CompositeSubItems">
+                                                    <td>{{z.SKU}}</td>
+                                                    <td>{{z.Quantity}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td><span style="display: inline-block; max-width:300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{y.Title}}</span></td>
+                                <td>{{y.Quantity}}</td>
+                                <td>{{y.Cost | number:2}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>{{x.CustomerInfo.ChannelBuyerName}}</td>
+                    <td>{{x.TotalsInfo.TotalCharge | number:2}}</td>
+                    <td>{{x.ShippingInfo.Vendor}}</td>
+                    <td>{{x.GeneralInfo.Status ? 'PAID':'UNPAID'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <ul uib-pagination total-items="data.orderPageInfo.totalItems" items-per-page="data.orderPageInfo.itemsPerPage" max-size="8" ng-model="data.orderPageInfo.currentPage" ng-change="pageChanged()" boundary-link-numbers="true" rotate="false"></ul> 
+    </div>
+</div>
+
+
+

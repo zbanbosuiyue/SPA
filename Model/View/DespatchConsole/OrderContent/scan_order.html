@@ -1,0 +1,91 @@
+<div class="scan-order">
+    <form class="form-horizontal">
+        <div class="row">
+            <div class="col col-1x ml-10 mb-20">
+                <h4>Gerneral Info</h4>
+                <div>
+                    <div class="address-area"><span>Address</span></div>
+                    <textarea class="w-100 scan-order-address" readonly="" ng-bind="data.shippingAddress" ng-dblclick="showEditAddress()">
+                    </textarea>
+                </div>
+            </div>
+            <div class="col col-3x ml-10 mb-20">
+                <h4>Shipping:</h4>
+                    <div class="control-group mt-20">
+                        <label class="control-label shipping">Tracking Number:</label>
+                        <div class="controls">
+                            <input type="text" ng-model="data.ShippingInfo.TrackingNumber" ng-keyup="$event.keyCode == 13 && test()">
+                        </div>
+                    </div>
+                    <div class="control-group mt-20">
+                        <label class="control-label shipping">Shipping Method:</label>
+                        <div class="controls">
+                            <select ng-change="shippingInfoChanged()" ng-model="currentOrder.shippingInfo.postalServiceId" ng-options="s.pkPostalServiceId as s.PostalServiceName for s in shippingMethods" class="scan-order-select-shipping">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group mt-20" ng-if="orderPackagingCalculation.SplitPackageCount == 0">
+                        <label class="control-label shipping">Packaging:</label>
+                        <div class="controls">
+                            <span ng-bind="data.ShippingInfo.PackageCategory"></span>
+                        </div>
+                    </div>
+                    <div class="control-group mt-20" ng-if="orderPackagingCalculation.SplitPackageCount == 0">
+                        <label class="control-label shipping">Packaging Type:</label>
+                        <div class="controls">
+                            <span ng-bind="data.ShippingInfo.PackageType"></span>
+                        </div>
+                    </div>
+                    <div class="control-group mt-20" ng-if="orderPackagingCalculation.SplitPackageCount == 0">
+                        <label class="control-label shipping">Dimensions(HxWxD):</label>
+                        <div class="controls">
+                            <span class="ng-binding">{{orderPackagingCalculation.TotalHeight}} X {{orderPackagingCalculation.TotalWidth}} X {{orderPackagingCalculation.TotalDepth}}</span>
+                        </div>
+                    </div>
+                    <div class="control-group mt-20">
+                        <label class="control-label shipping">Items Weight:</label>
+                        <div class="controls">
+                            <input type="text" ng-model="orderPackagingCalculation.ItemWeight" value="{{orderPackagingCalculation.ItemWeight | number: 2}}" ng-keyup="$event.keyCode == 13 && test()">
+                        </div>
+                    </div>
+                    <div class="control-group mt-20">
+                        <label class="control-label shipping">Total Weight:</label>
+                        <div class="controls">
+                            <input type="text" ng-model="data.ShippingInfo.TotalWeight" value="{{orderPackagingCalculation.TotalWeight | number: 2}}" ng-keyup="$event.keyCode == 13 && test()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="border"></div>
+        <div class="row">
+            <div class="control-group mb-30">
+                <label class="control-label w-auto">Scan Barcode/SKU:</label>
+                <div class="controls w-100">
+                    <input type="text" ng-model="currentOrder.lastScannedItemText" ng-keyup="$event.keyCode == 13 && scanItem()">
+                </div>
+            </div>
+            <div class="scan-item">
+                <table class="table table-bordered" style="border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                        <th width="10%">Checked</th>
+                        <th width="15%">SKU</th>
+                        <th width="15%">Barcode</th>
+                        <th width="50%">Item Title</th>
+                        <th width="10%">Total QTY</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="(index, x) in finalOrderItems" class="{{x.checkedQty == 0 ? 'bg-secondary' : (x.checkedQty == x.qty ? 'bg-success' : 'bg-warning')}}">
+                        <td>{{x.checkedQty}}</td>
+                        <td>{{x.SKU}}</td>
+                        <td>{{x.BarcodeNumber}}</td>
+                        <td>{{x.Title}}</td>
+                        <td>{{x.qty}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>

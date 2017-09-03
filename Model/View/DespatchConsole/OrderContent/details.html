@@ -1,0 +1,174 @@
+<div class="order-details">
+<form class="form-horizontal">
+	<div class="order-basic-section">
+		<div class="row">
+			<div class="col-sm-6 mb-20">
+				<div class="control-group mt-20">
+					<label class="control-label">Order Id:</label>
+					<div class="controls"><input lw-tst="input_orderId" type="text" ng-model="data.NumOrderId" readonly="" class="ng-pristine ng-valid"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Source:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.GeneralInfo.Source}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Channel Reference:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.GeneralInfo.SecondaryReference}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">External Reference:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.GeneralInfo.ExternalReferenceNum}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Status:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.GeneralInfo.Status ? 'PAID' : 'UNPAID'}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Payment Method:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.TotalsInfo.PaymentMethod}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Channel Buyer Name:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.ChannelBuyerName}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Profit Margin:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.TotalsInfo.ProfitMargin | number:2}}"></div>
+				</div>
+			</div>
+			<div class="col-sm-6 mb-20">
+				<div class="control-group mt-20">
+					<label class="control-label">Date:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.GeneralInfo.ReceivedDate | date:'yyyy-MM-dd'}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Subsource:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.GeneralInfo.SubSource}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Total Discount</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.TotalsInfo.TotalDiscount | number:2}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Subtotal:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.TotalsInfo.Subtotal | number:2}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Shipping Cost(ex tax):</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.ShippingInfo.PostageCostExTax | number:2}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Tax:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.TotalsInfo.Tax | number:2}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Shipping Cost:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.TotalsInfo.PostageCost | number:2}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Total:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.TotalsInfo.TotalCharge | number:2}}"></div>
+				</div>
+	        </div>
+	   	</div>
+	</div>
+	<div class="border"></div>
+	<div class="order-customer-section">
+		<div class="row">
+			<div class="col-sm-6 mb-20">
+				<div class="control-group mt-20 shipping-control-group mt-20">
+					<label class="control-label">Shipping Address:</label>
+					<div class="controls">
+						<textarea ng-model="data.shippingAddress" readonly="" class="shipping-address"></textarea>
+					</div>
+					<div class="control-group mt-20">
+						<label class="control-label">Phone:</label>
+						<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.Address.PhoneNumber}}"></div>
+					</div>
+					<div class="control-group mt-20">
+						<label class="control-label">Email:</label>
+						<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.Address.EmailAddress}}"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 mb-20">
+				<div class="control-group mt-20">
+					<label class="control-label">Company:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.Address.Company}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Name:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.Address.FullName}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Address 1:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.Address.Address1}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Address 2:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.Address.Address2}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Address 3:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.Address.Address3}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Town:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.Address.Town}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Region:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.Address.Region}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">PostCode:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.Address.PostCode}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Country:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.CustomerInfo.Address.Country}}"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="border"></div>
+	<div class="order-shipping-section">
+		<div class="row">
+			<div class="col-sm-12 mb-20">
+				<div class="control-group mt-20">
+					<label class="control-label">Shipping Vendor:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.ShippingInfo.Vendor}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Shipping Vendor:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.ShippingInfo.PostalServiceName}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Tracking:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.ShippingInfo.TrackingNumber}}"></div>
+				</div>
+			</div>
+			<div class="col-sm-6 mb-20">
+				<div class="control-group mt-20">
+					<label class="control-label">Packaging:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.ShippingInfo.PackageCategory}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Item Weight:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.ShippingInfo.ItemWeight}}"></div>
+				</div>
+			</div>
+			<div class="col-sm-6 mb-20">
+				<div class="control-group mt-20">
+					<label class="control-label">Type:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.ShippingInfo.PackageType}}"></div>
+				</div>
+				<div class="control-group mt-20">
+					<label class="control-label">Total Weight:</label>
+					<div class="controls"><input type="text" readonly="" value="{{data.ShippingInfo.TotalWeight}}"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+</div>

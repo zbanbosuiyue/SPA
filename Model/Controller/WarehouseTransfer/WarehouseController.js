@@ -1,9 +1,9 @@
-var GridController = function ($scope, $rootScope, $uibModal, Api) {
+var WarehouseController = function ($scope, $rootScope, $uibModal, Api, $routeParams) {
     var uibModalInstance = null;
     $scope.data = {
         WarehouseTransferInfo: {
             selectedTransfer : null,
-            totalitems: 0,
+            totalItems: 0,
             currentPage: 1,
             itemsperpage: 6,
             toLocations: [],
@@ -31,7 +31,7 @@ var GridController = function ($scope, $rootScope, $uibModal, Api) {
                 locationId: $scope.selectedFromLocation.StockLocationId,
             };
             SetBusy($("body"));
-            Api.PostApiCall("WarehouseTransfer", "GetActiveTransfersForLocation", request, function (event1) {
+            Api.PostApiCall("WarehouseTransfer", "GetActiveTransfersForLocation", request).then(function (event1) {
                 if (event1.hasErrors == true) {
                     alert("Error Getting data: " + event1.error);
                 } else {
@@ -41,11 +41,11 @@ var GridController = function ($scope, $rootScope, $uibModal, Api) {
                             request = {
                                 pkTransferId: element.PkTransferId
                             }
-                            Api.PostApiCall("WarehouseTransfer", "GetTransferItems", request, function (event2) {
+                            Api.PostApiCall("WarehouseTransfer", "GetTransferItems", request).then(function (event2) {
                                  if (event2.hasErrors == true) {
                                     alert("Error Getting data: " + event2.error);
                                  } else {
-                                    if (event1.result.length > 0){
+                                    if (event2.result.length > 0){
                                         element.itemsData = event2.result;
                                         element.firstItemSKU = event2.result[0].SKU;
                                         element.firstItemRequestQty = event2.result[0].RequestedQuantity;
@@ -61,7 +61,7 @@ var GridController = function ($scope, $rootScope, $uibModal, Api) {
                         SetBusy($("body"), true);
                     }
 
-                    $scope.data.WarehouseTransferInfo.totalitems = event1.result.length;
+                    $scope.data.WarehouseTransferInfo.totalItems = event1.result.length;
                     $scope.data.WarehouseTransferInfo.data = event1.result;
                 }
             });
@@ -86,7 +86,7 @@ var GridController = function ($scope, $rootScope, $uibModal, Api) {
     $scope.getTransferDetail = function(data){
         var modalInstance = $uibModal.open({
             animation: true,
-            templateUrl: '/SPA/Views/GetTransferDetail.html',
+            templateUrl: 'Model/View/WarehouseTransfer/GetTransferDetail.html',
             controller: 'GetTransferDetailController',
             size: "lg",
             ariaLabelledBy: 'modal-title',
@@ -106,7 +106,7 @@ var GridController = function ($scope, $rootScope, $uibModal, Api) {
     $scope.createNewTransfer = function (element) {
         var modalInstance = $uibModal.open({
             animation: true,
-            templateUrl: '/SPA/Views/CreateNewTransferWindow.html',
+            templateUrl: 'Model/View/WarehouseTransfer/CreateNewTransferWindow.html',
             controller: 'CreateNewTransferController',
             size: "lg",
             ariaLabelledBy: 'modal-title',
@@ -116,6 +116,7 @@ var GridController = function ($scope, $rootScope, $uibModal, Api) {
         });
 
         modalInstance.result.then(function (selectedItem) {
+            console.log(selectedItem);
             $scope.data.WarehouseTransferInfo.selectedItem = selectedItem;
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
@@ -127,4 +128,4 @@ var GridController = function ($scope, $rootScope, $uibModal, Api) {
 
 }
 
-GridController.$inject = ['$scope', '$rootScope', '$uibModal','Api'];
+WarehouseController.$inject = ['$scope', '$rootScope', '$uibModal', 'Api', '$routeParams'];

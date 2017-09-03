@@ -1,45 +1,43 @@
 ﻿<html>
 <head>
-    <title>Warehouse Transfer</title>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <title>Bizright Connector</title>
+    <script src="assets/js/jquery-3.2.1.min.js"></script>
     
-    <script src="Scripts/ui-bootstrap-tpls-1.1.2.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+    <script src="assets/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
 
 
 
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="css/custom.css" rel="stylesheet" />
-    <link href="css/angular-chart.min.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href="assets/css/angular-chart.min.css" rel="stylesheet" />
+    <link href="assets/css/despatch-console.css" rel="stylesheet" />
 
-    <script src="Scripts/loadingoverlay.min.js"></script>
-    <script src="Scripts/Chart.min.js"></script>
-    <script src="Scripts/angular-chart.min.js"></script>
-    <script src="Scripts/ng-file-upload-shim.min.js"></script>
-    <script src="Scripts/ng-file-upload.min.js"></script>
+    <script src="assets/js/loadingoverlay.min.js"></script>
+    <script src="assets/js/Chart.min.js"></script>
+    <script src="assets/js/angular-chart.min.js"></script>
+    <script src="assets/js/ng-file-upload-shim.min.js"></script>
+    <script src="assets/js/ng-file-upload.min.js"></script>
 
 
-    <script src="ApiService.js"></script>
-    <script src="Controller/GetTransferDetailController.js"></script>
-    <script src="Controller/CreateNewTransferController.js"></script>
-    <script src="Controller/GridController.js"></script>
-    <script src="Controller/MainController.js"></script>
-    <script src="App.js"></script>
+    <script src="Model/Service/ApiService.js"></script>
+    <script src="Model/Controller/DespatchConsole/Scan/ScanItemController.js"></script>
+    <script src="Model/Controller/DespatchConsole/GetOrderDetailController.js"></script>
+    <script src="Model/Controller/DespatchConsole/DespatchConsoleController.js"></script>
+    <script src="Model/Controller/DespatchConsole/GetOrderByScanCodeController.js"></script>
+    <script src="Model/Controller/WarehouseTransfer/GetTransferDetailController.js"></script>
+    <script src="Model/Controller/WarehouseTransfer/CreateNewTransferController.js"></script>
+    <script src="Model/Controller/WarehouseTransfer/WarehouseController.js"></script>
+    <script src="Model/Controller/MainController.js"></script>
+    <script src="Model/App.js"></script>
 
 </head>
 <body>
@@ -54,7 +52,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Warehouse Transfer</a>
+                    <a class="navbar-brand" href="#">Bizright Connector</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -63,18 +61,15 @@
                     <ul class="nav navbar-nav" id="FromLocationSelector">
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{selectedFromLocation.LocationName}}<span class="caret"></span></a>
-
                             <ul class="dropdown-menu">
                                 <li ng-repeat="x in models.locations" ng-click="changeFromLocation(x)"><a>{{x.LocationName}}</a></li>
                             </ul>
                         </li>
                     </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
+                </div>
+            </div>
         </nav>
-        
         <div ng-view>
-
         </div>	
     </div>
 </body>

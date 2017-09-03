@@ -6,7 +6,7 @@ var GetTransferDetailController = function ($scope, $uibModalInstance, data, Api
 	console.log(data);
 
 	$scope.close = function(){
-		$uibModalInstance.dismiss('cancel');
+		$uibModalInstance.close(data);
 	}
 
 	function GetData(){

@@ -1,0 +1,24 @@
+<div class="modal-header">
+	<h3 class="modal-title" id="modal-title">View Order - <mark>{{data.NumOrderId}}</mark></h3>
+</div>
+
+<div class="modal-body">
+	<table class="orderInfo table">
+		<tr>
+			<td class="static-content header-menu-content">
+				<ul class="nav nav-tabs">
+					<li ng-repeat="(index, x) in orderTitles.name"><a ng-click="selectTitle(x)"><i class="fa {{orderTitles.icon[index]}}"><span style="margin: 5px">{{x}}</span></i></a></li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td class="dynamic-content body-content">
+				<div ng-include="orderContentHTML"></div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-primary" type="button" ng-click="close()">Close</button>
+</div>
